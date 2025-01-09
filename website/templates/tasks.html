@@ -1,4 +1,42 @@
 {% extends "base.html" %}
+
 {% block body %}
-<p>To jest strona zadań dla zalogowanego użytkownika</p>
+<h1>Twoje Zadania</h1>
+
+<!-- Formularz do dodawania zadania -->
+<form method="POST" action="{{ url_for('views.tasks') }}">
+    <label for="title">Tytuł:</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="task_type">Typ zadania:</label>
+    <select name="task_type" id="task_type" required>
+        <option value="1">Typ 1</option>
+        <option value="2">Typ 2</option>
+        <option value="3">Typ 3</option>
+    </select>
+
+    <label for="description">Opis:</label>
+    <textarea name="description" id="description"></textarea>
+
+    <label for="due_date">Termin:</label>
+    <input type="date" name="due_date" id="due_date">
+
+    <button type="submit">Dodaj zadanie</button>
+</form>
+
+<!-- Wyświetlanie listy zadań -->
+<h2>Lista Zadań</h2>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <strong>{{ task[1] }}</strong> - {{ task[2] }} - Termin: {{ task[3] }} - Status: {{ task[4] }}
+        
+        <!-- Formularz do usuwania zadania -->
+        <form method="POST" action="{{ url_for('views.delete_task_view', task_id=task[0]) }}" style="display:inline;">
+            <button type="submit">Usuń</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
