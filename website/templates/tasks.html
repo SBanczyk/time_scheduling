@@ -1,4 +1,27 @@
 {% extends "base.html" %}
-{% block body %}
-<p>To jest strona zadań dla zalogowanego użytkownika</p>
+
+{% block content %}
+<h1>Twoje Zadania</h1>
+
+<!-- Formularz do dodawania zadania -->
+<form method="POST" action="{{ url_for('views.tasks') }}">
+    <label for="title">Tytuł:</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="task_type">Typ zadania:</label>
+    <select name="task_type" id="task_type" required>
+        <option value="1">Typ 1</option>
+        <option value="2">Typ 2</option>
+        <option value="3">Typ 3</option>
+    </select>
+
+    <label for="description">Opis:</label>
+    <textarea name="description" id="description"></textarea>
+
+    <label for="due_date">Termin:</label>
+    <input type="date" name="due_date" id="due_date">
+
+    <button type="submit">Dodaj zadanie</button>
+</form>
+
 {% endblock %}
