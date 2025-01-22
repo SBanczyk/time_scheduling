@@ -35,6 +35,7 @@ def create_database():
     );
     """)
 
+    
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS tasks (
         task_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,6 +71,31 @@ def create_database():
     );
     """)
 
+
+    conn.commit()
+    conn.close()
+
+# Funkcja do tworzenia nowego zadania
+def create_task(title, description, task_type, due_date):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO tasks (title, tasktype, description, due_date)
+    VALUES (?, ?, ?, ?)
+    """, (title, task_type, description, due_date))
+
+    conn.commit()
+    conn.close()
+
+# Funkcja do usuwania zadania
+def delete_task(task_id):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    DELETE FROM tasks WHERE task_id = ?
+    """, (task_id,))
 
     conn.commit()
     conn.close()
